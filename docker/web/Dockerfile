@@ -16,6 +16,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     msmtp-mta \
     vim \
     ssl-cert \
+    wget \
+    git \
     && \
     pecl install imagick xdebug && \
     docker-php-ext-enable imagick xdebug && \
