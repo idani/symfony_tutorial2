@@ -5,6 +5,7 @@ services:
     build:
       context: ./
       dockerfile: ./docker/web/Dockerfile
+    # image: php:7.1-apache
     ports:
       - "80:80"
       - "443:443"
@@ -12,11 +13,10 @@ services:
     # depends_on:
     #   - php
     volumes:
-      - ./src:/usr/local/apache2/htdocs/
-      # - ./docker/nginx/site.conf:/etc/nginx/conf.d/default.conf
-      - ./docker/web/php.ini:/etc/php/php.ini
-      - ./docker/web/xdebug.ini:/etc/php/conf.d/xdebug.ini
-      - ./docker/web/ssmtp.conf:/etc/ssmtp/ssmtp.conf
+      - ./src:/var/www/html
+      - ./docker/web/php.ini:/usr/local/etc/php/php.ini
+      - ./docker/web/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini
+      - ./docker/web/msmtprc:/etc/msmtprc
       - ./logs:/var/log/apache2
   db:
     # image: mysql:5.7
