@@ -62,7 +62,9 @@ class ProductController extends AbstractController
             );
         }
 
-        return new Response('Check out this great product: ' . $product->getName());
+        $this->addFlash('notice', 'テストフラッシュ');
+        // return new Response('Check out this great product: ' . $product->getName());
+        return $this->render('lucky/number.html.twig', ['number' => $product->getName()]);
     }
 
 
