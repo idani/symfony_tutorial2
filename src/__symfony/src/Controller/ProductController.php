@@ -6,6 +6,7 @@ use App\Entity\Product;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class ProductController extends AbstractController
 {
@@ -24,17 +25,43 @@ class ProductController extends AbstractController
      *
      * @return Response
      */
-    public function createProduct(): Response
+    public function createProduct(ValidatorInterface $validator): Response
     {
         $entityManager = $this->getDoctrine()->getManager();
         $product = new Product();
-        $product->setName('Keyboard');
+        $product->setName('javas');
         $product->setPrice(1999);
         $product->setDescription('Ergonomic and stylish!');
+
+        $errors = $validator->validate($product);
+        if (count($errors) > 0) {
+            return new Response((string) $errors, 400);
+        }
 
         $entityManager->persist($product);
         $entityManager->flush();
 
         return new Response('Saved new product with id ' . $product->getId());
+    }
+
+    /**
+     * @Route("/product/{id}", name="product_show")
+     *
+     * @param integer $id
+     * @return Response
+     */
+    public function show(int $id): Response
+    {
+        $product = $this->getDoctrine()
+            ->getRepository(Product::class)
+            ->find($id);
+
+        if (!$product) {
+            throw $this->createNotFoundException(
+                'No product found for id ' . $id
+            );
+        }
+
+        return new Response('Check out this great product: ' . $product->getName());
     }
 }
