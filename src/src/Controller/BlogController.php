@@ -9,29 +9,22 @@ use Symfony\Component\Routing\Annotation\Route;
 class BlogController extends AbstractController
 {
     /**
-     * @Route("/blog", name="blog_list")
+     * @Route("/blog/{page}", name="blog_list", requirements={"page"="\d+"})
      */
-    public function list()
+    public function list(int $page)
     {
-        // ...
+        return $this->render('lucky/number.html.twig', ['number' => __FILE__ . '(' . __LINE__ . '):' . __FUNCTION__ . ' page:' . $page]);
     }
 
-    /**
-     * @Route("/api/posts/{id}", methods={"GET", "HeAD"})
-     *
-     * @param integer $id
-     * @return void
-     */
-    public function show(int $id)
-    { }
 
     /**
-     * @Route("/api/posts/{id}", methods={"PUT"})
+     * @Route("/blog/{slug}", name="blog_show")
      *
-     * @param integer $id
+     * @param string $slug
      * @return void
      */
-
-    public function edit(int $id)
-    { }
+    public function show(string $slug)
+    {
+        return $this->render('lucky/number.html.twig', ['number' => __FILE__ . '(' . __LINE__ . '):' . __FUNCTION__ . ':slug=' . $slug]);
+    }
 }
