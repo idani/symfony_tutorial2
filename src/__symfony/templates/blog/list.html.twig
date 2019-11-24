@@ -1,0 +1,38 @@
+{# templates/blog/index.html.twig #}
+{% extends 'blog/layout.html.twig' %}
+
+{% block title %}Blog Index{% endblock %}
+
+{% block content %}
+    {% for article in articles %}
+        <h2>{{ article.title }}</h2>
+        <p>{{ article.body }}</p>
+    {% endfor %}
+
+    <a href="{{ path('blog_index') }}">Homepage</a>
+
+    {# ... #}
+    {# the image lives at "public/images/logo.png" #}
+    <img src="{{ asset('images/logo.svg') }}" alt="Symfony!"/>
+
+    {# the CSS file lives at "public/css/blog.css" #}
+    <link href="{{ asset('css/blog.css') }}" rel="stylesheet"/>
+
+    {# the JS file lives at "public/bundles/acme/js/loader.js" #}
+    <script src="{{ asset('bundles/acme/js/loader.js') }}"></script>
+
+
+    {% for post in blog_posts %}
+        <h1>
+            <a href="{{ path('blog_post', {slug: post.slug}) }}">{{ post.title }}</a>
+        </h1>
+
+        <p>{{ post.excerpt }}</p>
+    {% endfor %}
+
+    <p>Username: {{ app.user.username ?? 'Anonymous user' }}</p>
+    {% if app.debug %}
+        <p>Request method: {{ app.request.method }}</p>
+        <p>Application Environment: {{ app.environment }}</p>
+    {% endif %}
+{% endblock %}
