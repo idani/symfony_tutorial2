@@ -1,5 +1,6 @@
 {# templates/lucky/number.html.twig #}
-<body>
+{% extends 'base.html.twig' %}
+{% block body %}
 	{# read and display all flash messages #}
 	{% for label, messages in app.flashes %}
 		{% for message in messages %}
@@ -9,5 +10,6 @@
 		{% endfor %}
 	{% endfor %}
 	<h1>Your lucky number is
-		{{ number }}</h1>
-</body>
+		{{ number }}
+	</h1>
+{% endblock %}
